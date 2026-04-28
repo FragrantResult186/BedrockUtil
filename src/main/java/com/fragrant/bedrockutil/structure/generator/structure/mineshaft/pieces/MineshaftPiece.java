@@ -13,9 +13,6 @@ import java.util.List;
 
 public abstract class MineshaftPiece extends StructurePiece<MineshaftPiece> {
 
-    public BoundingBox boundingBox;
-    protected Direction facing;
-
     public MineshaftPiece(int genDepth) {
         super(genDepth);
     }
@@ -31,22 +28,5 @@ public abstract class MineshaftPiece extends StructurePiece<MineshaftPiece> {
             }
         }
         return null;
-    }
-
-    public Direction getFacing() {
-        return facing;
-    }
-
-    public BoundingBox getBoundingBox() {
-        return boundingBox;
-    }
-
-    public String getName() {
-        return this.getClass().getSimpleName();
-    }
-
-    @Override
-    public String toString() {
-        return "%s %s".formatted(getName(), getBoundingBox());
     }
 }

@@ -42,6 +42,17 @@ public class BedrockRandom implements IRandom {
         this((int)seed);
     }
 
+    /**
+     * Copy constructor
+     * @param rand
+     */
+    public BedrockRandom(BedrockRandom rand) {
+        this.seed = rand.seed;
+        System.arraycopy(rand.mt, 0, this.mt, 0, N);
+        this.mti = rand.mti;
+        this.mtiFast = rand.mtiFast;
+        this.valid = rand.valid;
+    }
 
     // ===== PUBLIC INTERFACE METHODS ===== //
 

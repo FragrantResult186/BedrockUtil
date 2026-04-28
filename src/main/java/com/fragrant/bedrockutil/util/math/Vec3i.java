@@ -64,7 +64,7 @@ public class Vec3i {
 
 	@Override
 	public String toString() {
-		return "Pos{" + "blockX=" + this.x + ", y=" + this.y + ", centerZ=" + this.z + '}';
+		return "Pos{" + "x=" + this.x + ", y=" + this.y + ", z=" + this.z + '}';
 	}
 
 }

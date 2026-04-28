@@ -82,5 +82,10 @@ public class ChunkPos extends Vec3i {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "ChunkPos{" + "x=" + this.getX() + ", y=" + this.getY() + ", z=" + this.getZ() + '}';
+	}
+
 }
 

@@ -1,110 +1,40 @@
 package com.fragrant.bedrockutil.util.math;
 
 @SuppressWarnings("unused")
-public class BlockPos {
+public class BlockPos extends Vec3i {
 
     public static final BlockPos ORIGIN = new BlockPos(0, 0, 0);
 
-    private final double x, y, z;
-
     public BlockPos(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        super(x, y, z);
     }
 
     public BlockPos(int x, int z) {
-        this.x = x;
-        this.y = 0;
-        this.z = z;
-    }
-
-    public BlockPos(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public BlockPos(float x, float z) {
-        this.x = x;
-        this.y = 0;
-        this.z = z;
-    }
-
-    public BlockPos(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public BlockPos(double x, double z) {
-        this.x = x;
-        this.y = 0;
-        this.z = z;
+        super(x, 0, z);
     }
 
     public BlockPos(Vec3i vec3i) {
         this(vec3i.getX(), vec3i.getY(), vec3i.getZ());
     }
 
-    public int getX() {
-        return (int) Math.floor(this.x);
-    }
-
-    public int getY() {
-        return (int) Math.floor(this.y);
-    }
-
-    public int getZ() {
-        return (int) Math.floor(this.z);
-    }
-
-    public double getXDouble() {
-        return this.x;
-    }
-
-    public double getYDouble() {
-        return this.y;
-    }
-
-    public double getZDouble() {
-        return this.z;
-    }
-
     public BlockPos add(BlockPos pos) {
-        return this.add(pos.getXDouble(), pos.getYDouble(), pos.getZDouble());
+        return this.add(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public BlockPos subtract(BlockPos pos) {
-        return this.subtract(pos.getXDouble(), pos.getYDouble(), pos.getZDouble());
+        return this.subtract(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public BlockPos add(int x, int y, int z) {
-        return new BlockPos(this.x + x, this.y + y, this.z + z);
+        return new BlockPos(this.getX() + x, this.getY() + y, this.getZ() + z);
     }
 
     public BlockPos subtract(int x, int y, int z) {
-        return new BlockPos(this.x - x, this.y - y, this.z - z);
-    }
-
-    public BlockPos add(double x, double y, double z) {
-        return new BlockPos(this.x + x, this.y + y, this.z + z);
-    }
-
-    public BlockPos subtract(double x, double y, double z) {
-        return new BlockPos(this.x - x, this.y - y, this.z - z);
-    }
-
-    public BlockPos multiply(double scalar) {
-        return new BlockPos(this.x * scalar, this.y * scalar, this.z * scalar);
-    }
-
-    public BlockPos multiply(double x, double y, double z) {
-        return new BlockPos(this.x * x, this.y * y, this.z * z);
+        return new BlockPos(this.getX() - x, this.getY() - y, this.getZ() - z);
     }
 
     public BlockPos divide(double scalar) {
-        return new BlockPos(this.x / scalar, this.y / scalar, this.z / scalar);
+        return new BlockPos((int) (this.getX() / scalar), (int) (this.getY() / scalar), (int) (this.getZ() / scalar));
     }
 
     public BlockPos shl(int amount) {
@@ -124,29 +54,29 @@ public class BlockPos {
     }
 
     public double distanceTo(BlockPos other) {
-        double dx = this.x - other.x;
-        double dy = this.y - other.y;
-        double dz = this.z - other.z;
+        double dx = this.getX() - other.getX();
+        double dy = this.getY() - other.getY();
+        double dz = this.getZ() - other.getZ();
         return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
 
     public double distanceSqTo(BlockPos other) {
-        double dx = this.x - other.x;
-        double dy = this.y - other.y;
-        double dz = this.z - other.z;
+        double dx = this.getX() - other.getX();
+        double dy = this.getY() - other.getY();
+        double dz = this.getZ() - other.getZ();
         return dx * dx + dy * dy + dz * dz;
     }
 
     public double manhattanDistanceTo(BlockPos other) {
-        return Math.abs(this.x - other.x) + Math.abs(this.y - other.y) + Math.abs(this.z - other.z);
+        return Math.abs(this.getX() - other.getX()) + Math.abs(this.getY() - other.getY()) + Math.abs(this.getZ() - other.getZ());
     }
 
     public double getMagnitude() {
-        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+        return Math.sqrt(this.getX() * this.getX() + this.getY() * this.getY() + this.getZ() * this.getZ());
     }
 
     public double getMagnitudeSq() {
-        return this.x * this.x + this.y * this.y + this.z * this.z;
+        return this.getX() * this.getX() + this.getY() * this.getY() + this.getZ() * this.getZ();
     }
 
     public BlockPos normalize() {
@@ -155,27 +85,27 @@ public class BlockPos {
     }
 
     public double dot(BlockPos other) {
-        return this.x * other.x + this.y * other.y + this.z * other.z;
+        return this.getX() * other.getX() + this.getY() * other.getY() + this.getZ() * other.getZ();
     }
 
     public BlockPos cross(BlockPos other) {
         return new BlockPos(
-                this.y * other.z - this.z * other.y,
-                this.z * other.x - this.x * other.z,
-                this.x * other.y - this.y * other.x
+                this.getY() * other.getZ() - this.getZ() * other.getY(),
+                this.getZ() * other.getX() - this.getX() * other.getZ(),
+                this.getX() * other.getY() - this.getY() * other.getX()
         );
     }
 
     public BlockPos floor() {
-        return new BlockPos(Math.floor(this.x), Math.floor(this.y), Math.floor(this.z));
+        return new BlockPos((int) (double) this.getX(), (int) (double) this.getY(), (int) (double) this.getZ());
     }
 
     public BlockPos ceil() {
-        return new BlockPos(Math.ceil(this.x), Math.ceil(this.y), Math.ceil(this.z));
+        return new BlockPos((int) (double) this.getX(), (int) (double) this.getY(), (int) (double) this.getZ());
     }
 
     public BlockPos round() {
-        return new BlockPos(Math.round(this.x), Math.round(this.y), Math.round(this.z));
+        return new BlockPos(Math.round(this.getX()), Math.round(this.getY()), Math.round(this.getZ()));
     }
 
     public BlockPos toChunkCorner() {
@@ -192,17 +122,17 @@ public class BlockPos {
 
     public BlockPos relative(Direction direction) {
         return new BlockPos(
-                this.x + direction.getVector().getX(),
-                this.y + direction.getVector().getY(),
-                this.z + direction.getVector().getZ()
+                this.getX() + direction.getVector().getX(),
+                this.getY() + direction.getVector().getY(),
+                this.getZ() + direction.getVector().getZ()
         );
     }
 
     public BlockPos relative(Direction direction, int offset) {
         return offset == 0 ? this : new BlockPos(
-                this.x + direction.getVector().getX() * offset,
-                this.y + direction.getVector().getY() * offset,
-                this.z + direction.getVector().getZ() * offset
+                this.getX() + direction.getVector().getX() * offset,
+                this.getY() + direction.getVector().getY() * offset,
+                this.getZ() + direction.getVector().getZ() * offset
         );
     }
 
@@ -213,7 +143,7 @@ public class BlockPos {
             int i = axis == Direction.Axis.X ? offset : 0;
             int j = axis == Direction.Axis.Y ? offset : 0;
             int k = axis == Direction.Axis.Z ? offset : 0;
-            return new BlockPos(this.x + i, this.y + j, this.z + k);
+            return new BlockPos(this.getX() + i, this.getY() + j, this.getZ() + k);
         }
     }
 
@@ -237,9 +167,9 @@ public class BlockPos {
 
     public String toTP(boolean relativeY) {
         if (relativeY) {
-            return "/tp" + " " + (int) this.x + " ~ " + (int) this.z;
+            return "/tp" + " " + this.getX() + " ~ " + this.getZ();
         } else {
-            return "/tp" + " " + (int) this.x + " " + (int) this.y + " " + (int) this.z;
+            return "/tp" + " " + this.getX() + " " + this.getY() + " " + this.getZ();
         }
     }
 
@@ -248,21 +178,21 @@ public class BlockPos {
         if (this == o) return true;
         if (!(o instanceof BlockPos)) return false;
         BlockPos pos = (BlockPos) o;
-        return Double.compare(pos.x, this.x) == 0 &&
-                Double.compare(pos.y, this.y) == 0 &&
-                Double.compare(pos.z, this.z) == 0;
+        return Double.compare(pos.getX(), this.getX()) == 0 &&
+                Double.compare(pos.getY(), this.getY()) == 0 &&
+                Double.compare(pos.getZ(), this.getZ()) == 0;
     }
 
     @Override
     public int hashCode() {
-        long xBits = Double.doubleToLongBits(this.x);
-        long yBits = Double.doubleToLongBits(this.y);
-        long zBits = Double.doubleToLongBits(this.z);
+        long xBits = Double.doubleToLongBits(this.getX());
+        long yBits = Double.doubleToLongBits(this.getY());
+        long zBits = Double.doubleToLongBits(this.getZ());
         return (int) (xBits ^ (xBits >>> 32) ^ yBits ^ (yBits >>> 32) ^ zBits ^ (zBits >>> 32));
     }
 
     @Override
     public String toString() {
-        return "BlockPos{" + "x=" + this.x + ", y=" + this.y + ", z=" + this.z + '}';
+        return "BlockPos{" + "x=" + this.getX() + ", y=" + this.getY() + ", z=" + this.getZ() + '}';
     }
 }

@@ -19,6 +19,16 @@ public class ChunkRandom implements IRandom {
         this.random = random;
     }
 
+    public ChunkRandom(ChunkRandom other) {
+        if (other.random instanceof BedrockRandom) {
+            this.random = new BedrockRandom((BedrockRandom) other.random);
+        } else {
+            this.random = other.random;
+        }
+        this.a = other.a;
+        this.b = other.b;
+    }
+
     public int getPopulationSeed(long worldSeed, int chunkX, int chunkZ) {
         updateNextAB(worldSeed);
         return (int) (((this.a | 1) * chunkX + (this.b | 1) * chunkZ) ^ worldSeed);

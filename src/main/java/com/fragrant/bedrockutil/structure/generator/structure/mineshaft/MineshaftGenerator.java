@@ -20,7 +20,7 @@ public class MineshaftGenerator extends Generator {
     public boolean shouldGenerate;
     protected MineshaftPiece start;
 
-    public MineshaftGenerator(MineshaftType type, MCVersion version) {
+    public MineshaftGenerator(MCVersion version, MineshaftType type) {
         super(version);
         this.type = type;
     }
@@ -30,13 +30,13 @@ public class MineshaftGenerator extends Generator {
         Mineshaft mineshaft = new Mineshaft(this.version);
         this.shouldGenerate = mineshaft.canGenerate(worldSeed, chunkX, chunkZ, random);
         if (this.shouldGenerate) {
-            build(worldSeed, chunkX, chunkZ, random);
+            generatePieces(worldSeed, chunkX, chunkZ, random);
         }
         return this.shouldGenerate;
     }
 
-    public void build(long worldSeed, int chunkX, int chunkZ, ChunkRandom random) {
-        clear();
+    public void generatePieces(long worldSeed, int chunkX, int chunkZ, ChunkRandom random) {
+        this.pieces.clear();
         int x = (chunkX << 4) + 2;
         int z = (chunkZ << 4) + 2;
 
@@ -111,9 +111,4 @@ public class MineshaftGenerator extends Generator {
     public BoundingBox getBoundingBox() {
         return boundingBox;
     }
-
-    public void clear() {
-        this.pieces.clear();
-    }
-
 }

@@ -10,6 +10,11 @@ public class RegionPos extends Vec3i {
 		this.regionSize = regionSize;
 	}
 
+	public RegionPos(int x, int z) {
+		super(x, 0, z);
+		this.regionSize = 0;
+	}
+
 	public RegionPos add(ChunkPos pos) {
 		return this.add(pos.getX(), pos.getZ());
 	}

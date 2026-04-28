@@ -1,7 +1,6 @@
 package com.fragrant.bedrockutil.structure.generator;
 
 import com.fragrant.bedrockutil.util.math.BoundingBox;
-import com.fragrant.bedrockutil.util.math.BlockPos;
 import com.fragrant.bedrockutil.util.math.Direction;
 import com.fragrant.bedrockutil.util.math.Vec3i;
 
@@ -18,6 +17,7 @@ public abstract class StructurePiece<T extends StructurePiece<T>> {
 
     public BoundingBox boundingBox;
     protected Direction facing;
+    public List<Vec3i> chests = new ArrayList<>();
 
     protected int applyXTransform(int x, int z) {
         if (this.facing == null) {
@@ -89,28 +89,25 @@ public abstract class StructurePiece<T extends StructurePiece<T>> {
         }
     }
 
-    public void setChest() {
-
+    protected void setChest(Vec3i offsetPos) {
+        this.chests.add(applyVecTransform(offsetPos));
     }
 
-    protected List<Vec3i> getChestOffsets() {
+    protected List<Vec3i> getChestPos() {
         return Collections.emptyList();
     }
 
-    public List<Vec3i> getChestPositions() {
-        if (this.boundingBox == null) return Collections.emptyList();
-        List<Vec3i> offsets = this.getChestOffsets();
-        if (offsets.isEmpty()) return Collections.emptyList();
-
-        List<Vec3i> positions = new ArrayList<>(offsets.size());
-        for (Vec3i offset : offsets) {
-            positions.add(this.applyVecTransform(offset));
-        }
-        return positions;
+    public String toTP() {
+        if (this.boundingBox == null) return "";
+        return this.boundingBox.getCenter().toBPos().toTP();
     }
 
-    public String toTP() {
-        if (boundingBox == null) return "";
-        return boundingBox.getCenter().toBPos().toTP();
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public String toString() {
+        return "%s %s".formatted(getName(), getBoundingBox());
     }
 }
